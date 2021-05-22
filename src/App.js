@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import CartProvider from "./store/CartProvider";
+
+import Header from "./components/Layout/header";
+import ArtSupplies from "./components/ArtSupplies/ArtSupplies";
+import Cart from "./components/Cart/Cart";
 
 function App() {
+  const [isCartIconClicked, toggleCartIconButtonClicked] = useState(false);
+
+  const cartIconClicked = () => {
+    toggleCartIconButtonClicked(!isCartIconClicked);
+  };
+  const onClickingCloseButton = () => {
+    toggleCartIconButtonClicked(!isCartIconClicked);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CartProvider>
+      {isCartIconClicked && (
+        <Cart onClickingCloseButton={onClickingCloseButton} />
+      )}
+
+      <Header cartIconClicked={cartIconClicked} />
+      <ArtSupplies />
+    </CartProvider>
   );
 }
 
